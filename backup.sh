@@ -9,7 +9,7 @@ echo "Starting backup..."
 if [ -f $INCLUDE_FROM_FILE -a -d $BACKUP_DIRECTORY ]; then
     echo "  backing up files in      : ${INCLUDE_FROM_FILE}"
     if [ -f $EXCLUDE_FROM_FILE ]; then
-        echo "  excluding patters from   : ${EXCLUDE_FROM_FILE}"
+        echo "  excluding patterns from   : ${EXCLUDE_FROM_FILE}"
     else
         echo "  excluding these patterns : ${EXCLDED_PATTERNS}"
     fi
@@ -20,9 +20,9 @@ if [ -f $INCLUDE_FROM_FILE -a -d $BACKUP_DIRECTORY ]; then
     read -p "continue? (y/n) " continue
     if [ "$continue" == "y" ]; then
         if [ -f $EXCLUDE_FROM_FILE ]; then
-            rsync --files-from=$INCLUDE_FROM_FILE --exclude-from=$EXCLUDE_FROM_FILE --delete -avzr $HOME $BACKUP_DIRECTORY
+            rsync --files-from=$INCLUDE_FROM_FILE --exclude-from=$EXCLUDE_FROM_FILE --delete -avzzr $HOME $BACKUP_DIRECTORY
         else
-            rsync --files-from=$INCLUDE_FROM_FILE --exclude=$EXCLUDED_PATTERNS --delete -avzr $HOME $BACKUP_DIRECTORY
+            rsync --files-from=$INCLUDE_FROM_FILE --exclude=$EXCLUDED_PATTERNS --delete -avzzr $HOME $BACKUP_DIRECTORY
         fi
         return_code=$?
         echo "done"
